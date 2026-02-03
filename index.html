@@ -1,414 +1,536 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fabulous Master Store</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --fab-pink: #FF4081;
-            --fab-navy: #0C1E4F;
-            --fab-bg: #FAFAFA;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fabulous Master Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --fab-pink: #FF4081;
+      --fab-navy: #0C1E4F;
+      --fab-bg: #FAFAFA;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--fab-bg);
-            color: var(--fab-navy);
-            -webkit-tap-highlight-color: transparent;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--fab-bg);
+      color: var(--fab-navy);
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
+    h1,
+    h2,
+    h3 {
+      font-family: 'Playfair Display', serif;
+    }
 
-        .serif-alt {
-            font-family: 'Lora', serif;
-        }
+    .serif-alt {
+      font-family: 'Lora', serif;
+    }
 
-        .fab-gradient-premium {
-            background: linear-gradient(135deg, #FF4081 0%, #FF80AB 100%);
-        }
+    .fab-gradient-premium {
+      background: linear-gradient(135deg, #FF4081 0%, #FF80AB 100%);
+    }
 
-        .fab-gradient-dark {
-            background: linear-gradient(180deg, #1A1C2C 0%, #4A1942 100%);
-        }
+    .fab-gradient-dark {
+      background: linear-gradient(180deg, #1A1C2C 0%, #4A1942 100%);
+    }
 
-        .card-shadow {
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-        }
+    .card-shadow {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    }
 
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
 
-        .btn-bounce:active {
-            transform: scale(0.96);
-        }
+    .btn-bounce:active {
+      transform: scale(0.96);
+    }
 
-        .tier-pill {
-            transition: all 0.2s ease;
-        }
-        
-        .tier-pill.active {
-            background-color: var(--fab-navy);
-            color: white;
-            box-shadow: 0 4px 12px rgba(12, 30, 79, 0.2);
-        }
+    .tier-pill {
+      transition: all 0.2s ease;
+    }
 
-        /* --- Dynamic Grid Visibility Logic --- */
-        .tier-col { display: none; }
+    .tier-pill.active {
+      background-color: var(--fab-navy);
+      color: white;
+      box-shadow: 0 4px 12px rgba(12, 30, 79, 0.2);
+    }
 
-        /* Free View: 3 Cols (F/P/U) */
-        .show-free .col-free, .show-free .col-prem, .show-free .col-ultra { display: flex; }
-        .show-free .label-span { grid-column: span 3 / span 3; }
-        .show-free .tier-span { grid-column: span 3 / span 3; }
+    /* --- Dynamic Grid Visibility Logic --- */
+    .tier-col {
+      display: none;
+    }
 
-        /* Premium View: 2 Cols (P/U) */
-        .show-prem .col-prem, .show-prem .col-ultra { display: flex; }
-        .show-prem .label-span { grid-column: span 6 / span 6; }
-        .show-prem .tier-span { grid-column: span 3 / span 3; }
+    /* Free View: Features (3) + Free (3) + Prem (3) + Ultra (3) = 12 Cols */
+    .show-free .col-free,
+    .show-free .col-prem,
+    .show-free .col-ultra {
+      display: flex;
+    }
 
-        /* Ultra View: 1 Col (U) */
-        .show-ultra .col-ultra { display: flex; }
-        .show-ultra .label-span { grid-column: span 9 / span 9; }
-        .show-ultra .tier-span { grid-column: span 3 / span 3; }
+    .show-free .label-span {
+      grid-column: span 3 / span 3;
+    }
 
-        /* Button Visibility */
-        #premium-cta, #ultra-cta { display: none; }
-        .show-free #premium-cta, .show-free #ultra-cta { display: block; }
-        .show-prem #ultra-cta { display: block; }
-    </style>
+    .show-free .tier-span {
+      grid-column: span 3 / span 3;
+    }
+
+    /* Premium View: Features (6) + Ultra (6) = 12 Cols */
+    /* NOTE: Changed tier-span to 6 so it fills the remaining space */
+    .show-prem .col-prem,
+    .show-prem .col-ultra {
+      display: flex;
+    }
+
+    .show-prem .label-span {
+      grid-column: span 6 / span 6;
+    }
+
+    .show-prem .tier-span {
+      grid-column: span 3 / span 3;
+    }
+
+    /* Wait: If you only show P and U, you have two columns. 
+   To make it look right, Premium and Ultra should both be visible. 
+   If you want JUST Ultra to show in Prem view, use the logic below: */
+
+    /* Ultra View: Features (9) + Ultra (3) = 12 Cols */
+    .show-ultra .col-ultra {
+      display: flex;
+    }
+
+    .show-ultra .label-span {
+      grid-column: span 9 / span 9;
+    }
+
+    .show-ultra .tier-span {
+      grid-column: span 3 / span 3;
+    }
+
+    /* --- Button Visibility Fix --- */
+    #premium-cta,
+    #ultra-cta {
+      display: none !important;
+    }
+
+    /* On Free: Show both */
+    .show-free #premium-cta {
+      display: block !important;
+    }
+
+    .show-free #ultra-cta {
+      display: block !important;
+    }
+
+    /* On Premium: Only show Ultra */
+    .show-prem #ultra-cta {
+      display: block !important;
+    }
+
+    /* On Ultra: Hide both (Already handled by default) */
+  </style>
 </head>
+
 <body class="pb-24">
 
-    <!-- Preview Control Switcher -->
-    <div class="bg-white/80 backdrop-blur-md p-2 sticky top-0 z-50 border-b border-gray-100 flex justify-center gap-2">
-        <button onclick="setTier('free')" id="pill-free" class="tier-pill active px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-50 border border-gray-100">Free Preview</button>
-        <button onclick="setTier('premium')" id="pill-premium" class="tier-pill px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-50 border border-gray-100">Premium Preview</button>
-        <button onclick="setTier('ultra')" id="pill-ultra" class="tier-pill px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-50 border border-gray-100">Ultra Preview</button>
+  <!-- Preview Control Switcher -->
+  <div class="bg-white/80 backdrop-blur-md p-2 sticky top-0 z-50 border-b border-gray-100 flex justify-center gap-2">
+    <button onclick="setTier('free')" id="pill-free"
+      class="tier-pill active px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-50 border border-gray-100">Free
+      Preview</button>
+    <button onclick="setTier('premium')" id="pill-premium"
+      class="tier-pill px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-50 border border-gray-100">Premium
+      Preview</button>
+    <button onclick="setTier('ultra')" id="pill-ultra"
+      class="tier-pill px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-50 border border-gray-100">Ultra
+      Preview</button>
+  </div>
+
+  <!-- Header Section -->
+  <header class="p-6 pb-2 bg-white">
+    <div class="flex justify-between items-center">
+      <div>
+        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">MEMBERSHIP CENTER</p>
+        <h1 class="text-2xl mt-1">Your Evolution</h1>
+      </div>
+      <div
+        class="w-10 h-10 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm">
+        AD
+      </div>
+    </div>
+  </header>
+
+  <!-- Subscription Status -->
+  <section class="px-6 mb-8 pt-4">
+    <div class="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 card-shadow">
+      <div class="flex items-center gap-4">
+        <div id="status-icon"
+          class="w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center text-xl transition-all duration-300">
+          🌱
+        </div>
+        <div>
+          <h4 id="status-title" class="font-bold text-sm">Free Explorer</h4>
+          <p id="status-subtitle" class="text-[11px] text-gray-400">Day 14 of your journey</p>
+        </div>
+      </div>
+      <button class="text-xs font-bold text-pink-500 bg-pink-50 px-4 py-2 rounded-lg btn-bounce">
+        Restore
+      </button>
+    </div>
+  </section>
+
+  <!-- Comparison Table Section -->
+  <section id="comparison-section" class="px-4 mb-10 show-free">
+    <div class="fab-gradient-dark rounded-[40px] p-7 text-white card-shadow overflow-hidden relative">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-pink-500/20 blur-[80px]"></div>
+
+      <div class="relative z-10 text-center mb-10">
+        <h2 id="table-header-text" class="text-2xl mb-2">Choose Your Depth</h2>
+        <p class="text-gray-400 text-xs serif-alt italic">Unlock the science of lasting change.</p>
+      </div>
+
+      <!-- Table Header -->
+      <div class="grid grid-cols-12 mb-4 text-[9px] font-black uppercase tracking-widest text-gray-500 px-2">
+        <div class="label-span flex items-center">Features</div>
+        <div class="tier-span justify-center items-center tier-col col-free">Free</div>
+        <div class="tier-span justify-center items-center tier-col col-prem text-pink-400">Prem</div>
+        <div class="tier-span justify-center items-center tier-col col-ultra text-purple-400">Ultra</div>
+      </div>
+
+      <!-- Feature Rows -->
+      <div class="space-y-1 relative z-10">
+        <!-- Row 1 -->
+        <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5">
+          <div class="label-span text-[11px] font-medium opacity-80">Daily Rituals</div>
+          <div class="tier-span justify-center tier-col col-free"><svg class="w-3.5 h-3.5 text-white/40" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+          <div class="tier-span justify-center tier-col col-prem"><svg class="w-3.5 h-3.5 text-pink-500" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+          <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+        </div>
+        <!-- Row 2 -->
+        <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5 bg-white/5 rounded-xl">
+          <div class="label-span text-[11px] font-medium opacity-80">100+ Journeys</div>
+          <div class="tier-span justify-center tier-col col-free text-white/10 text-[10px]">—</div>
+          <div class="tier-span justify-center tier-col col-prem"><svg class="w-3.5 h-3.5 text-pink-500" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+          <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+        </div>
+        <!-- Row 3 -->
+        <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5">
+          <div class="label-span text-[11px] font-medium opacity-80">Offline Access</div>
+          <div class="tier-span justify-center tier-col col-free text-white/10 text-[10px]">—</div>
+          <div class="tier-span justify-center tier-col col-prem"><svg class="w-3.5 h-3.5 text-pink-500" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+          <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+        </div>
+        <!-- Row 4 (Fabulous Labs) -->
+        <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5">
+          <div class="label-span text-[11px] font-medium opacity-80">Fabulous AI Labs</div>
+          <div class="tier-span justify-center tier-col col-free text-white/10 text-[10px]">—</div>
+          <div class="tier-span justify-center tier-col col-prem text-white/10 text-[10px]">—</div>
+          <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+        </div>
+        <!-- Row 5 (AI Audio Coach) -->
+        <div class="grid grid-cols-12 items-center py-4 px-2 bg-purple-500/10 rounded-xl">
+          <div class="label-span text-[11px] font-medium text-purple-200">AI Audio Coach</div>
+          <div class="tier-span justify-center tier-col col-free text-white/10 text-[10px]">—</div>
+          <div class="tier-span justify-center tier-col col-prem text-white/10 text-[10px]">—</div>
+          <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg></div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="mt-10 flex flex-col gap-3 relative z-10">
+        <button id="premium-cta" onclick="handlePurchase('Premium')"
+          class="w-full py-4 bg-white text-gray-900 rounded-2xl font-bold text-sm btn-bounce transition-all shadow-xl shadow-pink-500/20">
+          START PREMIUM WEEK
+        </button>
+        <button id="ultra-cta" onclick="handlePurchase('Ultra')"
+          class="w-full py-4 bg-indigo-500 text-white rounded-2xl font-bold text-sm btn-bounce transition-all shadow-xl shadow-indigo-500/20">
+          GO ULTRA
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Toolkit -->
+  <section class="mb-10 overflow-hidden">
+    <div class="px-6 mb-4">
+      <h2 class="text-xl">The Wellness Ecosystem</h2>
+      <p id="toolkit-subtitle" class="text-xs text-gray-500 mt-1 serif-alt italic">Unlock 8 apps with a single
+        subscription.</p>
     </div>
 
-    <!-- Header Section -->
-    <header class="p-6 pb-2 bg-white">
-        <div class="flex justify-between items-center">
-            <div>
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">MEMBERSHIP CENTER</p>
-                <h1 class="text-2xl mt-1">Your Evolution</h1>
-            </div>
-            <div class="w-10 h-10 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm">
-                AD
-            </div>
+    <div class="flex overflow-x-auto gap-4 px-6 no-scrollbar pb-4">
+      <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100 relative overflow-hidden">
+        <div id="unlocked-shape"
+          class="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
+          <span class="bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">UNLOCKED</span>
         </div>
-    </header>
-
-    <!-- Subscription Status -->
-    <section class="px-6 mb-8 pt-4">
-        <div class="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 card-shadow">
-            <div class="flex items-center gap-4">
-                <div id="status-icon" class="w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center text-xl transition-all duration-300">
-                    🌱
-                </div>
-                <div>
-                    <h4 id="status-title" class="font-bold text-sm">Free Explorer</h4>
-                    <p id="status-subtitle" class="text-[11px] text-gray-400">Day 14 of your journey</p>
-                </div>
-            </div>
-            <button class="text-xs font-bold text-pink-500 bg-pink-50 px-4 py-2 rounded-lg btn-bounce">
-                Restore
-            </button>
+        <div
+          class="w-10 h-10 bg-blue-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-100">
+          S</div>
+        <h4 class="font-bold text-sm">Shape</h4>
+        <p class="text-[10px] text-gray-400 mb-3">Mindful Workouts</p>
+        <button class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Details</button>
+      </div>
+      <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100 relative overflow-hidden">
+        <div id="unlocked-elixir"
+          class="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
+          <span class="bg-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">UNLOCKED</span>
         </div>
-    </section>
-
-    <!-- Comparison Table Section -->
-    <section id="comparison-section" class="px-4 mb-10 show-free">
-        <div class="fab-gradient-dark rounded-[40px] p-7 text-white card-shadow overflow-hidden relative">
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-pink-500/20 blur-[80px]"></div>
-
-            <div class="relative z-10 text-center mb-10">
-                <h2 id="table-header-text" class="text-2xl mb-2">Choose Your Depth</h2>
-                <p class="text-gray-400 text-xs serif-alt italic">Unlock the science of lasting change.</p>
-            </div>
-
-            <!-- Table Header -->
-            <div class="grid grid-cols-12 mb-4 text-[9px] font-black uppercase tracking-widest text-gray-500 px-2">
-                <div class="label-span flex items-center">Features</div>
-                <div class="tier-span justify-center items-center tier-col col-free">Free</div>
-                <div class="tier-span justify-center items-center tier-col col-prem text-pink-400">Prem</div>
-                <div class="tier-span justify-center items-center tier-col col-ultra text-purple-400">Ultra</div>
-            </div>
-
-            <!-- Feature Rows -->
-            <div class="space-y-1 relative z-10">
-                <!-- Row 1 -->
-                <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5">
-                    <div class="label-span text-[11px] font-medium opacity-80">Daily Rituals</div>
-                    <div class="tier-span justify-center tier-col col-free"><svg class="w-3.5 h-3.5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                    <div class="tier-span justify-center tier-col col-prem"><svg class="w-3.5 h-3.5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                    <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                </div>
-                <!-- Row 2 -->
-                <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5 bg-white/5 rounded-xl">
-                    <div class="label-span text-[11px] font-medium opacity-80">100+ Journeys</div>
-                    <div class="tier-span justify-center tier-col col-free text-white/10 text-[10px]">—</div>
-                    <div class="tier-span justify-center tier-col col-prem"><svg class="w-3.5 h-3.5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                    <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                </div>
-                <!-- Row 3 -->
-                <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5">
-                    <div class="label-span text-[11px] font-medium opacity-80">Offline Access</div>
-                    <div class="tier-span justify-center tier-col col-free text-white/10 text-[10px]">—</div>
-                    <div class="tier-span justify-center tier-col col-prem"><svg class="w-3.5 h-3.5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                    <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                </div>
-                <!-- Row 4 (Fabulous Labs) -->
-                <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5">
-                    <div class="label-span text-[11px] font-medium opacity-80">Fabulous AI Labs</div>
-                    <div class="tier-span justify-center tier-col col-free text-white/10 text-[10px]">—</div>
-                    <div class="tier-span justify-center tier-col col-prem text-white/10 text-[10px]">—</div>
-                    <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                </div>
-                <!-- Row 5 (AI Audio Coach) -->
-                <div class="grid grid-cols-12 items-center py-4 px-2 bg-purple-500/10 rounded-xl">
-                    <div class="label-span text-[11px] font-medium text-purple-200">AI Audio Coach</div>
-                    <div class="tier-span justify-center tier-col col-free text-white/10 text-[10px]">—</div>
-                    <div class="tier-span justify-center tier-col col-prem text-white/10 text-[10px]">—</div>
-                    <div class="tier-span justify-center tier-col col-ultra"><svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
-                </div>
-            </div>
-
-            <!-- Buttons -->
-            <div class="mt-10 flex flex-col gap-3 relative z-10">
-                <button id="premium-cta" onclick="handlePurchase('Premium')" class="w-full py-4 bg-white text-gray-900 rounded-2xl font-bold text-sm btn-bounce transition-all shadow-xl shadow-pink-500/20">
-                    START PREMIUM WEEK
-                </button>
-                <button id="ultra-cta" onclick="handlePurchase('Ultra')" class="w-full py-4 bg-indigo-500 text-white rounded-2xl font-bold text-sm btn-bounce transition-all shadow-xl shadow-indigo-500/20">
-                    GO ULTRA
-                </button>
-            </div>
+        <div
+          class="w-10 h-10 bg-emerald-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold shadow-lg shadow-emerald-100">
+          E</div>
+        <h4 class="font-bold text-sm">Elixir</h4>
+        <p class="text-[10px] text-gray-400 mb-3">Hydration Tracking</p>
+        <button class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Details</button>
+      </div>
+      <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100 relative overflow-hidden">
+        <div id="unlocked-clarify"
+          class="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
+          <span class="bg-amber-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">UNLOCKED</span>
         </div>
-    </section>
-
-    <!-- App Toolkit -->
-    <section class="mb-10 overflow-hidden">
-        <div class="px-6 mb-4">
-            <h2 class="text-xl">The Wellness Ecosystem</h2>
-            <p id="toolkit-subtitle" class="text-xs text-gray-500 mt-1 serif-alt italic">Unlock 8 apps with a single subscription.</p>
-        </div>
-        
-        <div class="flex overflow-x-auto gap-4 px-6 no-scrollbar pb-4">
-            <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100 relative overflow-hidden">
-                <div id="unlocked-shape" class="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
-                    <span class="bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">UNLOCKED</span>
-                </div>
-                <div class="w-10 h-10 bg-blue-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-100">S</div>
-                <h4 class="font-bold text-sm">Shape</h4>
-                <p class="text-[10px] text-gray-400 mb-3">Mindful Workouts</p>
-                <button class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Details</button>
-            </div>
-            <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100 relative overflow-hidden">
-                <div id="unlocked-elixir" class="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
-                    <span class="bg-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">UNLOCKED</span>
-                </div>
-                <div class="w-10 h-10 bg-emerald-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold shadow-lg shadow-emerald-100">E</div>
-                <h4 class="font-bold text-sm">Elixir</h4>
-                <p class="text-[10px] text-gray-400 mb-3">Hydration Tracking</p>
-                <button class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Details</button>
-            </div>
-            <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100 relative overflow-hidden">
-                <div id="unlocked-clarify" class="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
-                    <span class="bg-amber-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">UNLOCKED</span>
-                </div>
-                <div class="w-10 h-10 bg-amber-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold shadow-lg shadow-amber-100">C</div>
-                <h4 class="font-bold text-sm">Clarify</h4>
-                <p class="text-[10px] text-gray-400 mb-3">Guided Journaling</p>
-                <button class="text-[10px] font-bold text-amber-600 uppercase tracking-widest">Details</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Bundle Upgrade Card -->
-    <section id="bundle-section" class="mb-10 px-6">
-        <div class="bg-indigo-600 rounded-[32px] p-7 text-white relative overflow-hidden card-shadow transition-all duration-500">
-            <div id="bundle-overlay" class="absolute inset-0 bg-indigo-900/60 backdrop-blur-md z-20 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity">
-                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-indigo-600 text-3xl mb-4 shadow-2xl">✨</div>
-                <h3 class="text-xl font-bold tracking-tight">ULTRA ACTIVE</h3>
-            </div>
-            <span class="inline-block px-2 py-1 bg-white/20 rounded-lg text-[10px] font-bold uppercase tracking-widest mb-3">Complete Collection</span>
-            <h3 class="text-xl mb-2">The Fabulous Ultra Bundle</h3>
-            <p id="bundle-text" class="text-indigo-100 text-xs mb-6 leading-relaxed">AI Audio Coach + 8 wellness apps + Labs access.</p>
-            <button id="bundle-cta" onclick="handlePurchase('Ultra')" class="w-full py-3.5 bg-white text-indigo-600 rounded-xl font-bold text-sm btn-bounce shadow-lg shadow-indigo-900/20">
-                Unlock Total Access
-            </button>
-        </div>
-    </section>
-
-    <!-- Marketplace Grid -->
-    <section class="px-6 mb-12">
-        <h2 class="text-xl mb-4">Specialized Growth</h2>
-        <div class="grid grid-cols-2 gap-4">
-            <!-- AI Audio Coach (Replaced Family Plan) -->
-            <div id="card-audio" class="bg-purple-50/50 rounded-3xl p-5 border border-purple-100 flex flex-col justify-between h-44 relative overflow-hidden">
-                <div id="audio-unlocked" class="absolute inset-0 bg-purple-900/10 backdrop-blur-[1px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
-                    <span class="bg-white text-purple-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm">INCLUDED</span>
-                </div>
-                <div>
-                    <span class="text-2xl mb-2 block">🎙️</span>
-                    <h4 class="font-bold text-sm text-purple-900">AI Audio Coach</h4>
-                    <p class="text-[10px] text-purple-700/60 mt-1">Behavioral guidance always in your ear.</p>
-                </div>
-                <button id="audio-cta" onclick="handlePurchase('Ultra')" class="text-[10px] font-bold text-purple-600 uppercase tracking-widest">Learn More</button>
-            </div>
-            <!-- Human Coach -->
-            <div class="bg-rose-50/50 rounded-3xl p-5 border border-rose-100 flex flex-col justify-between h-44">
-                <div>
-                    <span class="text-2xl mb-2 block">💬</span>
-                    <h4 class="font-bold text-sm text-rose-900">Human Coach</h4>
-                    <p class="text-[10px] text-rose-700/60 mt-1">Text with a real behavioral expert.</p>
-                </div>
-                <button class="text-[10px] font-bold text-rose-600 uppercase tracking-widest">Book Now</button>
-            </div>
-            <!-- Workbooks -->
-            <div class="bg-amber-50/50 rounded-3xl p-5 border border-amber-100 flex flex-col justify-between h-44">
-                <div>
-                    <span class="text-2xl mb-2 block">📖</span>
-                    <h4 class="font-bold text-sm text-amber-900">Workbooks</h4>
-                    <p class="text-[10px] text-amber-700/60 mt-1">Physical journals shipped to your door.</p>
-                </div>
-                <button class="text-[10px] font-bold text-amber-600 uppercase tracking-widest">Shop</button>
-            </div>
-             <!-- Fabulous Labs -->
-             <div id="card-labs" class="bg-teal-50/50 rounded-3xl p-5 border border-teal-100 flex flex-col justify-between h-44 relative overflow-hidden">
-                <div id="labs-unlocked" class="absolute inset-0 bg-teal-900/10 backdrop-blur-[1px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
-                    <span class="bg-white text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm">INCLUDED</span>
-                </div>
-                <div>
-                    <span class="text-2xl mb-2 block">🧪</span>
-                    <h4 class="font-bold text-sm text-teal-900">Fabulous Labs</h4>
-                    <p class="text-[10px] text-teal-700/60 mt-1">AI-powered routine optimization & beta tools.</p>
-                </div>
-                <button id="labs-cta" onclick="handlePurchase('Ultra')" class="text-[10px] font-bold text-teal-600 uppercase tracking-widest">Explore</button>
-            </div>
-        </div>
-    </section>
-
-    <footer class="px-6 pb-12 text-center opacity-40">
-        <p class="text-[9px] font-medium tracking-widest uppercase">Fabulous Science-Backed Store</p>
-    </footer>
-
-    <!-- Success Modal -->
-    <div id="modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-6">
-        <div class="bg-white rounded-[40px] w-full max-w-sm p-8 text-center animate-in fade-in zoom-in duration-300">
-            <div class="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-10 h-10 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h3 class="text-2xl mb-2" id="modal-title">Success</h3>
-            <p class="text-gray-500 text-sm mb-8" id="modal-text">Action completed successfully.</p>
-            <button onclick="closeModal()" class="w-full py-4 fab-gradient-premium text-white rounded-2xl font-bold shadow-lg shadow-pink-200">Continue</button>
-        </div>
+        <div
+          class="w-10 h-10 bg-amber-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold shadow-lg shadow-amber-100">
+          C</div>
+        <h4 class="font-bold text-sm">Clarify</h4>
+        <p class="text-[10px] text-gray-400 mb-3">Guided Journaling</p>
+        <button class="text-[10px] font-bold text-amber-600 uppercase tracking-widest">Details</button>
+      </div>
     </div>
+  </section>
 
-    <script>
-        let currentTier = 'free';
+  <!-- The Bundle Upgrade Card -->
+  <section id="bundle-section" class="mb-10 px-6">
+    <div
+      class="bg-indigo-600 rounded-[32px] p-7 text-white relative overflow-hidden card-shadow transition-all duration-500">
+      <div id="bundle-overlay"
+        class="absolute inset-0 bg-indigo-900/60 backdrop-blur-md z-20 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity">
+        <div
+          class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-indigo-600 text-3xl mb-4 shadow-2xl">
+          ✨</div>
+        <h3 class="text-xl font-bold tracking-tight">ULTRA ACTIVE</h3>
+      </div>
+      <span
+        class="inline-block px-2 py-1 bg-white/20 rounded-lg text-[10px] font-bold uppercase tracking-widest mb-3">Complete
+        Collection</span>
+      <h3 class="text-xl mb-2">The Fabulous Ultra Bundle</h3>
+      <p id="bundle-text" class="text-indigo-100 text-xs mb-6 leading-relaxed">AI Audio Coach + 8 wellness apps + Labs
+        access.</p>
+      <button id="bundle-cta" onclick="handlePurchase('Ultra')"
+        class="w-full py-3.5 bg-white text-indigo-600 rounded-xl font-bold text-sm btn-bounce shadow-lg shadow-indigo-900/20">
+        Unlock Total Access
+      </button>
+    </div>
+  </section>
 
-        function setTier(tier) {
-            currentTier = tier;
-            const comparisonSection = document.getElementById('comparison-section');
-            
-            // Update UI Pills
-            ['free', 'premium', 'ultra'].forEach(t => {
-                const btn = document.getElementById(`pill-${t}`);
-                if (btn) btn.classList.toggle('active', t === tier);
-            });
+  <!-- Marketplace Grid -->
+  <section class="px-6 mb-12">
+    <h2 class="text-xl mb-4">Specialized Growth</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <!-- AI Audio Coach (Replaced Family Plan) -->
+      <div id="card-audio"
+        class="bg-purple-50/50 rounded-3xl p-5 border border-purple-100 flex flex-col justify-between h-44 relative overflow-hidden">
+        <div id="audio-unlocked"
+          class="absolute inset-0 bg-purple-900/10 backdrop-blur-[1px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
+          <span class="bg-white text-purple-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm">INCLUDED</span>
+        </div>
+        <div>
+          <span class="text-2xl mb-2 block">🎙️</span>
+          <h4 class="font-bold text-sm text-purple-900">AI Audio Coach</h4>
+          <p class="text-[10px] text-purple-700/60 mt-1">Behavioral guidance always in your ear.</p>
+        </div>
+        <button id="audio-cta" onclick="handlePurchase('Ultra')"
+          class="text-[10px] font-bold text-purple-600 uppercase tracking-widest">Learn More</button>
+      </div>
+      <!-- Human Coach -->
+      <div class="bg-rose-50/50 rounded-3xl p-5 border border-rose-100 flex flex-col justify-between h-44">
+        <div>
+          <span class="text-2xl mb-2 block">💬</span>
+          <h4 class="font-bold text-sm text-rose-900">Human Coach</h4>
+          <p class="text-[10px] text-rose-700/60 mt-1">Text with a real behavioral expert.</p>
+        </div>
+        <button class="text-[10px] font-bold text-rose-600 uppercase tracking-widest">Book Now</button>
+      </div>
+      <!-- Workbooks -->
+      <div class="bg-amber-50/50 rounded-3xl p-5 border border-amber-100 flex flex-col justify-between h-44">
+        <div>
+          <span class="text-2xl mb-2 block">📖</span>
+          <h4 class="font-bold text-sm text-amber-900">Workbooks</h4>
+          <p class="text-[10px] text-amber-700/60 mt-1">Physical journals shipped to your door.</p>
+        </div>
+        <button class="text-[10px] font-bold text-amber-600 uppercase tracking-widest">Shop</button>
+      </div>
+      <!-- Fabulous Labs -->
+      <div id="card-labs"
+        class="bg-teal-50/50 rounded-3xl p-5 border border-teal-100 flex flex-col justify-between h-44 relative overflow-hidden">
+        <div id="labs-unlocked"
+          class="absolute inset-0 bg-teal-900/10 backdrop-blur-[1px] z-10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity">
+          <span class="bg-white text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm">INCLUDED</span>
+        </div>
+        <div>
+          <span class="text-2xl mb-2 block">🧪</span>
+          <h4 class="font-bold text-sm text-teal-900">Fabulous Labs</h4>
+          <p class="text-[10px] text-teal-700/60 mt-1">AI-powered routine optimization & beta tools.</p>
+        </div>
+        <button id="labs-cta" onclick="handlePurchase('Ultra')"
+          class="text-[10px] font-bold text-teal-600 uppercase tracking-widest">Explore</button>
+      </div>
+    </div>
+  </section>
 
-            // Update Layout Classes for Grid
-            comparisonSection.classList.remove('show-free', 'show-prem', 'show-ultra');
-            comparisonSection.classList.add(`show-${tier}`);
+  <footer class="px-6 pb-12 text-center opacity-40">
+    <p class="text-[9px] font-medium tracking-widest uppercase">Fabulous Science-Backed Store</p>
+  </footer>
 
-            // Update Header Status
-            const icon = document.getElementById('status-icon');
-            const title = document.getElementById('status-title');
-            const subtitle = document.getElementById('status-subtitle');
-            
-            if (tier === 'free') {
-                icon.innerText = '🌱';
-                title.innerText = 'Free Explorer';
-                subtitle.innerText = 'Day 14 of your journey';
-                icon.className = "w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center text-xl transition-all";
-            } else if (tier === 'premium') {
-                icon.innerText = '💎';
-                title.innerText = 'Premium Member';
-                subtitle.innerText = 'Subscription active since Feb 2025';
-                icon.className = "w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-xl transition-all";
-            } else {
-                icon.innerText = '✨';
-                title.innerText = 'Ultra Member';
-                subtitle.innerText = 'Total Access Membership';
-                icon.className = "w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-xl transition-all shadow-inner shadow-purple-200";
-            }
+  <!-- Success Modal -->
+  <div id="modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-6">
+    <div class="bg-white rounded-[40px] w-full max-w-sm p-8 text-center animate-in fade-in zoom-in duration-300">
+      <div class="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-10 h-10 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl mb-2" id="modal-title">Success</h3>
+      <p class="text-gray-500 text-sm mb-8" id="modal-text">Action completed successfully.</p>
+      <button onclick="closeModal()"
+        class="w-full py-4 fab-gradient-premium text-white rounded-2xl font-bold shadow-lg shadow-pink-200">Continue</button>
+    </div>
+  </div>
 
-            // Comparison Section Title
-            const tableHeader = document.getElementById('table-header-text');
-            if (tier === 'free') {
-                tableHeader.innerText = "Choose Your Depth";
-            } else if (tier === 'premium') {
-                tableHeader.innerText = "Upgrade to Ultra";
-            } else {
-                tableHeader.innerText = "Your Total Access";
-            }
+  <script>
+    let currentTier = 'free';
 
-            // App Toolkit logic
-            const unlockedApps = ['unlocked-shape', 'unlocked-elixir', 'unlocked-clarify'];
-            unlockedApps.forEach(id => {
-                document.getElementById(id).style.opacity = (tier !== 'free') ? '1' : '0';
-            });
+    function setTier(tier) {
+      currentTier = tier;
+      const comparisonSection = document.getElementById('comparison-section');
 
-            // Ultra Overlay (Bundle)
-            const bundleOverlay = document.getElementById('bundle-overlay');
-            const bundleCta = document.getElementById('bundle-cta');
-            if (tier === 'ultra') {
-                bundleOverlay.style.opacity = '1';
-                bundleCta.style.display = 'none';
-            } else {
-                bundleOverlay.style.opacity = '0';
-                bundleCta.style.display = 'block';
-            }
+      // Update UI Pills
+      ['free', 'premium', 'ultra'].forEach(t => {
+        const btn = document.getElementById(`pill-${t}`);
+        if (btn) btn.classList.toggle('active', t === tier);
+      });
 
-            // Labs & Audio Coach Lock Logic
-            const labsUnlocked = document.getElementById('labs-unlocked');
-            const labsCta = document.getElementById('labs-cta');
-            const audioUnlocked = document.getElementById('audio-unlocked');
-            const audioCta = document.getElementById('audio-cta');
+      // Update Layout Classes for Grid
+      comparisonSection.classList.remove('show-free', 'show-prem', 'show-ultra');
+      comparisonSection.classList.add(`show-${tier}`);
 
-            if (tier === 'ultra') {
-                labsUnlocked.style.opacity = '1';
-                labsCta.style.visibility = 'hidden';
-                audioUnlocked.style.opacity = '1';
-                audioCta.style.visibility = 'hidden';
-            } else {
-                labsUnlocked.style.opacity = '0';
-                labsCta.style.visibility = 'visible';
-                audioUnlocked.style.opacity = '0';
-                audioCta.style.visibility = 'visible';
-            }
-        }
+      // Update Header Status
+      const icon = document.getElementById('status-icon');
+      const title = document.getElementById('status-title');
+      const subtitle = document.getElementById('status-subtitle');
 
-        function handlePurchase(tier) {
-            const modal = document.getElementById('modal');
-            const title = document.getElementById('modal-title');
-            const text = document.getElementById('modal-text');
-            modal.classList.remove('hidden');
-            title.innerText = tier === 'Ultra' ? "Welcome to Ultra" : `Unlocking ${tier}`;
-            text.innerText = `You've successfully selected ${tier}. Your personal AI Coach and behavioral toolkit are now fully synchronized.`;
-        }
-        
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-        
-        window.onload = () => setTier('free');
-    </script>
+      if (tier === 'free') {
+        icon.innerText = '🌱';
+        title.innerText = 'Free Explorer';
+        subtitle.innerText = 'Day 14 of your journey';
+        icon.className = "w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center text-xl transition-all";
+      } else if (tier === 'premium') {
+        icon.innerText = '💎';
+        title.innerText = 'Premium Member';
+        subtitle.innerText = 'Subscription active since Feb 2025';
+        icon.className = "w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-xl transition-all";
+      } else {
+        icon.innerText = '✨';
+        title.innerText = 'Ultra Member';
+        subtitle.innerText = 'Total Access Membership';
+        icon.className = "w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-xl transition-all shadow-inner shadow-purple-200";
+      }
+
+      // Comparison Section Title
+      const tableHeader = document.getElementById('table-header-text');
+      if (tier === 'free') {
+        tableHeader.innerText = "Choose Your Depth";
+      } else if (tier === 'premium') {
+        tableHeader.innerText = "Upgrade to Ultra";
+      } else {
+        tableHeader.innerText = "Your Total Access";
+      }
+
+      // App Toolkit logic
+      const unlockedApps = ['unlocked-shape', 'unlocked-elixir', 'unlocked-clarify'];
+      unlockedApps.forEach(id => {
+        document.getElementById(id).style.opacity = (tier !== 'free') ? '1' : '0';
+      });
+
+      // Ultra Overlay (Bundle)
+      const bundleOverlay = document.getElementById('bundle-overlay');
+      const bundleCta = document.getElementById('bundle-cta');
+      if (tier === 'ultra') {
+        bundleOverlay.style.opacity = '1';
+        bundleCta.style.display = 'none';
+      } else {
+        bundleOverlay.style.opacity = '0';
+        bundleCta.style.display = 'block';
+      }
+
+      // Labs & Audio Coach Lock Logic
+      const labsUnlocked = document.getElementById('labs-unlocked');
+      const labsCta = document.getElementById('labs-cta');
+      const audioUnlocked = document.getElementById('audio-unlocked');
+      const audioCta = document.getElementById('audio-cta');
+
+      if (tier === 'ultra') {
+        labsUnlocked.style.opacity = '1';
+        labsCta.style.visibility = 'hidden';
+        audioUnlocked.style.opacity = '1';
+        audioCta.style.visibility = 'hidden';
+      } else {
+        labsUnlocked.style.opacity = '0';
+        labsCta.style.visibility = 'visible';
+        audioUnlocked.style.opacity = '0';
+        audioCta.style.visibility = 'visible';
+      }
+    }
+
+    function handlePurchase(tier) {
+      const modal = document.getElementById('modal');
+      const title = document.getElementById('modal-title');
+      const text = document.getElementById('modal-text');
+      modal.classList.remove('hidden');
+      title.innerText = tier === 'Ultra' ? "Welcome to Ultra" : `Unlocking ${tier}`;
+      text.innerText = `You've successfully selected ${tier}. Your personal AI Coach and behavioral toolkit are now fully synchronized.`;
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+
+    window.onload = () => setTier('free');
+  </script>
 </body>
+
 </html>
