@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabulous Master Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fab-pink: #FF4081;
+            --fab-navy: #0C1E4F;
+            --fab-bg: #FAFAFA;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--fab-bg);
+            color: var(--fab-navy);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .fab-gradient-premium {
+            background: linear-gradient(135deg, #FF4081 0%, #FF80AB 100%);
+        }
+
+        .fab-gradient-dark {
+            background: linear-gradient(180deg, #1A1C2C 0%, #4A1942 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .btn-bounce:active {
+            transform: scale(0.96);
+        }
+
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="pb-24">
+
+    <!-- Header Section -->
+    <header class="p-6 pb-2 bg-white">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">MEMBERSHIP CENTER</p>
+                <h1 class="text-2xl mt-1">Your Evolution</h1>
+            </div>
+            <div class="w-10 h-10 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm">
+                AD
+            </div>
+        </div>
+    </header>
+
+    <!-- Subscription Status -->
+    <section class="px-6 mb-8 pt-4">
+        <div class="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 card-shadow">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-pink-50 rounded-xl flex items-center justify-center">
+                    🌱
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm">Free Explorer</h4>
+                    <p class="text-[11px] text-gray-400">Day 14 of your journey</p>
+                </div>
+            </div>
+            <button class="text-xs font-bold text-pink-500 bg-pink-50 px-4 py-2 rounded-lg btn-bounce">
+                Restore
+            </button>
+        </div>
+    </section>
+
+    <!-- Comparison Table Section (Duolingo Style) -->
+    <section class="px-4 mb-10">
+        <div class="fab-gradient-dark rounded-[40px] p-6 text-white card-shadow overflow-hidden relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-pink-500/20 blur-[80px]"></div>
+
+            <div class="relative z-10 text-center mb-8">
+                <h2 class="text-2xl mb-2">Choose Your Depth</h2>
+                <p class="text-gray-400 text-xs">Unlock the science of lasting change.</p>
+            </div>
+
+            <!-- Table Header -->
+            <div class="grid grid-cols-12 mb-4 text-[10px] font-bold uppercase tracking-widest text-gray-400 px-2">
+                <div class="col-span-6">Features</div>
+                <div class="col-span-3 text-center">Free</div>
+                <div class="col-span-3 text-center text-pink-400">Premium</div>
+            </div>
+
+            <!-- Feature Rows -->
+            <div class="space-y-1">
+                <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5">
+                    <div class="col-span-6 text-xs font-medium">Daily Rituals</div>
+                    <div class="col-span-3 flex justify-center"><svg class="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
+                    <div class="col-span-3 flex justify-center"><svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
+                </div>
+                <div class="grid grid-cols-12 items-center py-4 px-2 border-b border-white/5 bg-white/5 rounded-xl">
+                    <div class="col-span-6 text-xs font-medium">100+ Journeys</div>
+                    <div class="col-span-3 flex justify-center text-white/20">—</div>
+                    <div class="col-span-3 flex justify-center"><svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
+                </div>
+                <div class="grid grid-cols-12 items-center py-4 px-2">
+                    <div class="col-span-6 text-xs font-medium">Offline Access</div>
+                    <div class="col-span-3 flex justify-center text-white/20">—</div>
+                    <div class="col-span-3 flex justify-center"><svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg></div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <button onclick="handlePurchase('Premium')" class="w-full py-4 bg-white text-gray-900 rounded-2xl font-bold text-base btn-bounce transition-all shadow-xl shadow-pink-500/20">
+                    START MY FREE WEEK
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Toolkit: Ecosystem Cross-sell -->
+    <section class="mb-10">
+        <div class="px-6 mb-4">
+            <h2 class="text-xl">The Wellness Ecosystem</h2>
+            <p class="text-xs text-gray-500 mt-1">Unlock 8 apps with a single subscription.</p>
+        </div>
+        
+        <div class="flex overflow-x-auto gap-4 px-6 no-scrollbar pb-4">
+            <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100">
+                <div class="w-10 h-10 bg-blue-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold">S</div>
+                <h4 class="font-bold text-sm">Shape</h4>
+                <p class="text-[10px] text-gray-400 mb-3">Mindful Workouts</p>
+                <button class="text-[10px] font-bold text-blue-600 uppercase">Details</button>
+            </div>
+            <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100">
+                <div class="w-10 h-10 bg-emerald-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold">E</div>
+                <h4 class="font-bold text-sm">Elixir</h4>
+                <p class="text-[10px] text-gray-400 mb-3">Hydration Tracking</p>
+                <button class="text-[10px] font-bold text-emerald-600 uppercase">Details</button>
+            </div>
+            <div class="min-w-[200px] bg-white rounded-3xl p-5 card-shadow border border-gray-100">
+                <div class="w-10 h-10 bg-amber-500 rounded-xl mb-3 flex items-center justify-center text-white font-bold">C</div>
+                <h4 class="font-bold text-sm">Clarify</h4>
+                <p class="text-[10px] text-gray-400 mb-3">Guided Journaling</p>
+                <button class="text-[10px] font-bold text-amber-600 uppercase">Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Bundle: Primary Upgrade -->
+    <section class="mb-10 px-6">
+        <div class="bg-indigo-600 rounded-[32px] p-6 text-white relative overflow-hidden card-shadow">
+            <span class="inline-block px-2 py-1 bg-indigo-400/30 rounded-lg text-[10px] font-bold uppercase tracking-widest mb-3">Best Value</span>
+            <h3 class="text-xl mb-2">The Fabulous Bundle</h3>
+            <p class="text-indigo-100 text-xs mb-6">Family access + 8 wellness apps + AI features.</p>
+            <button onclick="handlePurchase('Family Bundle')" class="w-full py-3 bg-white text-indigo-600 rounded-xl font-bold text-sm btn-bounce">
+                Upgrade Everything
+            </button>
+        </div>
+    </section>
+
+    <!-- Marketplace: 2x2 Grid with AI & Labs -->
+    <section class="px-6 mb-12">
+        <h2 class="text-xl mb-4">Specialized Growth</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <!-- AI Features -->
+            <div class="bg-teal-50/50 rounded-3xl p-5 border border-teal-100 flex flex-col justify-between h-44">
+                <div>
+                    <span class="text-2xl mb-2 block">🧪</span>
+                    <h4 class="font-bold text-sm text-teal-900">Fabulous Labs</h4>
+                    <p class="text-[10px] text-teal-700/60 mt-1">AI-powered routine optimization & beta tools.</p>
+                </div>
+                <button class="text-[10px] font-bold text-teal-600 uppercase tracking-widest">Early Access</button>
+            </div>
+            <!-- Human Coach -->
+            <div class="bg-rose-50/50 rounded-3xl p-5 border border-rose-100 flex flex-col justify-between h-44">
+                <div>
+                    <span class="text-2xl mb-2 block">💬</span>
+                    <h4 class="font-bold text-sm text-rose-900">Human Coach</h4>
+                    <p class="text-[10px] text-rose-700/60 mt-1">Text with a real behavioral expert.</p>
+                </div>
+                <button class="text-[10px] font-bold text-rose-600 uppercase tracking-widest">Book Now</button>
+            </div>
+            <!-- Workbooks -->
+            <div class="bg-amber-50/50 rounded-3xl p-5 border border-amber-100 flex flex-col justify-between h-44">
+                <div>
+                    <span class="text-2xl mb-2 block">📖</span>
+                    <h4 class="font-bold text-sm text-amber-900">Workbooks</h4>
+                    <p class="text-[10px] text-amber-700/60 mt-1">Physical journals shipped to your door.</p>
+                </div>
+                <button class="text-[10px] font-bold text-amber-600 uppercase tracking-widest">Shop</button>
+            </div>
+            <!-- Family Plan -->
+            <div class="bg-purple-50/50 rounded-3xl p-5 border border-purple-100 flex flex-col justify-between h-44">
+                <div>
+                    <span class="text-2xl mb-2 block">👨‍👩‍👧</span>
+                    <h4 class="font-bold text-sm text-purple-900">Family Plan</h4>
+                    <p class="text-[10px] text-purple-700/60 mt-1">Share the journey with up to 5 members.</p>
+                </div>
+                <button class="text-[10px] font-bold text-purple-600 uppercase tracking-widest">Invite</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Support -->
+    <footer class="px-6 pb-12 text-center opacity-40">
+        <p class="text-[9px] font-medium tracking-widest uppercase">Fabulous Science-Backed Store</p>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-6">
+        <div class="bg-white rounded-[40px] w-full max-w-sm p-8 text-center animate-in fade-in zoom-in duration-300">
+            <div class="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-2xl mb-2" id="modal-title">Success</h3>
+            <p class="text-gray-500 text-sm mb-8" id="modal-text">Action completed successfully.</p>
+            <button onclick="closeModal()" class="w-full py-4 fab-gradient-premium text-white rounded-2xl font-bold">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        function handlePurchase(tier) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const text = document.getElementById('modal-text');
+            modal.classList.remove('hidden');
+            title.innerText = tier;
+            text.innerText = `You've successfully selected ${tier}. Your journey is evolving.`;
+        }
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
